@@ -1,0 +1,21 @@
+{
+    "name": "orderhandler/apollo-openapi-sdk",
+    "description": "A SDK For Apollo Open Api",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "FuFu",
+            "email": "wuyun@orderhandler.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OrderHandler\\apollo-openapi-sd\\": "src/"
+        }
+    }
+
+}
