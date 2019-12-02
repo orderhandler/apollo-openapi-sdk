@@ -46,7 +46,9 @@ class Configuration extends BasicApi
      */
     public function add($url_params, $requestBody)
     {
-
+        if(!$requestBody){
+            throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');
+        }
         return $this->send('POST',$url_params,self::ADD_CONFIGURATION, $requestBody);
 
     }
@@ -64,6 +66,9 @@ class Configuration extends BasicApi
      */
     public function update($url_params, $requestBody)
     {
+        if(!$requestBody){
+            throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');
+        }
         return $this->send('PUT',$url_params,self::UPDATE_CONFIGURATION, $requestBody);
     }
 
@@ -97,7 +102,9 @@ class Configuration extends BasicApi
      */
     public function release($url_params, $requestBody)
     {
-
+        if(!$requestBody){
+            throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');
+        }
         return $this->send('POST',$url_params,self::RELEASE_CONFIGURATION, $requestBody);
     }
 }
