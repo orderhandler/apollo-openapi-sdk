@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: bella
- * Date: 2019-11-27
- * Time: 13:43
- */
-
 namespace OrderHandler\ApolloOpenApi\Api;
 
 
 use OrderHandler\ApolloOpenApi\Kernel\BasicApi;
+
 
 class Configuration extends BasicApi
 {
@@ -35,16 +29,18 @@ class Configuration extends BasicApi
     const RELEASE_CONFIGURATION = "{portal_address}/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases";
 
     /**
+     * 添加
      * @param array $url_params [
      *              'env' => 'ENV',
      *              'appId' => 'APPID',
      *              'clusterName' => 'CLUSTERNAME',
      *              'namespaceName' => 'NAMESPACENAME'];
-     * @param $requestBody
+     *
+     * @param string $requestBody {"key":"timeout", "value":"3000", "comment":"超时时间", "dataChangeCreatedBy":"zhanglea"}
      * @return array
      *
      */
-    public function add($url_params, $requestBody)
+    public function add(array $url_params, string $requestBody)
     {
         if(!$requestBody){
             throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');
@@ -54,17 +50,18 @@ class Configuration extends BasicApi
     }
 
     /**
+     * 更新
      * @param array $url_params [
      *              'env' => 'ENV',
      *              'appId' => 'APPID',
      *              'clusterName' => 'CLUSTERNAME',
      *              'namespaceName' => 'NAMESPACENAME',
      *              'key' => 'KEY'];
-     * @param $requestBody
+     * @param string $requestBody {"key":"timeout", "value":"3000", "comment":"超时时间", "dataChangeLastModifiedBy":"zhanglea"}
      * @return array
      *
      */
-    public function update($url_params, $requestBody)
+    public function update(array $url_params, $requestBody)
     {
         if(!$requestBody){
             throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');
@@ -73,6 +70,7 @@ class Configuration extends BasicApi
     }
 
     /**
+     * 删除
      * @param array $url_params [
      *              'env' => 'ENV',
      *              'appId' => 'APPID',
@@ -81,26 +79,29 @@ class Configuration extends BasicApi
      *              'key' => 'KEY',
      *              'operator' => 'OPERATOR'];
      *
-     * @return array
+     * @return mixed
      *
      */
-    public function delete($url_params)
+    public function delete(array $url_params)
     {
         return $this->send('DELETE',$url_params,self::DELETE_CONFIGURATION);
     }
 
     /**
+     * 发布配置
+     *
      * @param array $url_params [
      *              'env' => 'ENV',
      *              'appId' => 'APPID',
      *              'clusterName' => 'CLUSTERNAME',
      *              'namespaceName' => 'NAMESPACENAME'];
-     * @param $requestBody
      *
-     * @return array
+     * @param string $requestBody{"releaseTitle":"2016-08-11", "releaseComment":"修改timeout值", "releasedBy":"zhanglea"}
+     *
+     * @return mixed
      *
      */
-    public function release($url_params, $requestBody)
+    public function release(array $url_params, $requestBody)
     {
         if(!$requestBody){
             throw new \InvalidArgumentException('Attribute RequestBody can not be empty!');

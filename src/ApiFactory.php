@@ -8,6 +8,8 @@
 
 namespace OrderHandler\ApolloOpenApi;
 
+use OrderHandler\ApolloOpenApi\Kernel\Register;
+
 /**
  * Class ApiFactory
  *
@@ -19,7 +21,7 @@ class ApiFactory
 {
 
     /**
-     * @param $name
+     * @param string $name 想要调用的method名称
      * @param array $config
      * @return mixed
      *
@@ -31,8 +33,8 @@ class ApiFactory
 
         $name = ucwords($name);
         $application = "\\OrderHandler\\ApolloOpenApi\\Api\\$name";
-        $config = new Configure($config);
-        return new $application($config);
+        Register::set('config',Configure::getInstance($config));
+        return new $application();
     }
 
     public static function __callStatic($name, $arguments)

@@ -9,39 +9,31 @@
 namespace OrderHandler\ApolloOpenApi\Kernel;
 
 use GuzzleHttp\Client;
-use OrderHandler\ApolloOpenApi\Configure;
 use RuntimeException;
 
 class HttpClient
 {
-    protected $config;
 
-    public function __construct(Configure $config)
+
+    public function httpGet(string $url, $data = '')
     {
-        $this->config = $config;
+        return $this->request($url, 'GET', $data);
     }
 
-
-    protected function httpGet(string $url, $params = '')
+    public function httpPost(string $url, string $data)
     {
-        return $this->request($url, 'GET', $params);
-    }
-
-    protected function httpPost(string $url, $data)
-    {
-        //todo json_encode $data
         return $this->request($url, 'POST', $data);
     }
 
-    protected function httpPut(string $url, string $data)
+    public function httpPut(string $url, string $data)
     {
         return $this->request($url, 'PUT', $data);
     }
 
 
-    protected function httpDelete(string $url, $params = '')
+    public function httpDelete(string $url, $data = '')
     {
-        return $this->request($url, 'DELETE', $params);
+        return $this->request($url, 'DELETE', $data);
     }
 
 
@@ -49,7 +41,7 @@ class HttpClient
     {
 
         $method = strtoupper($method);
-
+        $config = Register::get('config');
 
         try {
             $client = new Client;
@@ -57,7 +49,7 @@ class HttpClient
             $response = $client->request($method, $url, [
                 'headers' => [
                     'Content-Type' => 'application/json;charset=utf-8',
-                    'Authorization' => $this->config->getAuthorization()
+                    'Authorization' => $config->getAuthorization()
 
                 ],
                 'body' => $request_options

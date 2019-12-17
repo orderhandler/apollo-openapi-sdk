@@ -10,7 +10,6 @@ namespace OrderHandler\ApolloOpenApi\Api;
 
 
 use OrderHandler\ApolloOpenApi\Kernel\BasicApi;
-use OrderHandler\ApolloOpenApi\Kernel\Str;
 
 class Namespaces extends BasicApi
 {
@@ -45,7 +44,7 @@ class Namespaces extends BasicApi
      *              'namespaceName' => 'NAMESPACENAME'];
      * @return array
      *
-     *  @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getOne(array $url_params)
     {
@@ -75,24 +74,23 @@ class Namespaces extends BasicApi
      * @return array
      *
      */
-    public function getStatus($url_params)
+    public function getStatus(array $url_params)
     {
         return $this->send('GET',$url_params,self::GET_NAMESPACE_STATUS);
     }
 
     /**
-     * @param $appId
-     * @param $requestBody
+     * @param string $appId
+     * @param string $requestBody
      * @return array
      *
      */
-    public function create($appId, $requestBody)
+    public function create(string $appId, string $requestBody)
     {
-        $url_params = [
-            'portal_address' => $this->config->getPortalAddress(),
+        return $this->send('POST',[
             'appId' => $appId,
-        ];
-        $url = Str::urlMerge($url_params, self::CREATE_NAMESPACE);
-        return $this->httpPost($url, $requestBody);
+        ], self::CREATE_NAMESPACE, $requestBody);
+
+
     }
 }

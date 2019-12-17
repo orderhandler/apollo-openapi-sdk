@@ -25,4 +25,13 @@ class Str
 
         return  $merge_url;
     }
+
+    public static function paramsFilter($url_string)
+    {
+        $urlParams = [];
+
+        preg_match_all('/(?<={)[^}]+/', $url_string, $urlParams);
+
+        return $urlParams[0];
+    }
 }

@@ -11,42 +11,43 @@ namespace OrderHandler\ApolloOpenApi\Kernel;
 
 use InvalidArgumentException;
 
-class BasicApi extends HttpClient
+class BasicApi
 {
 
-    protected $message = [
+    private $init_params = [
         'portal_address' => '',
-        'env' => '',
-        'appId' => '',
-        'clusterName' => '',
     ];
 
-    /**
-     * Required attributes.
-     *
-     * @var array
-     */
-    protected $required = ['portal_address', 'env', 'appId', 'clusterName'];
+    private $httpClient;
+
+    private $config;
 
 
-    public function send($method, $url_params, $url, $requestBody = '')
+    public function __construct()
+    {
+        $this->httpClient = new HttpClient();
+        $this->config = Register::get('config');
+    }
+
+    protected function send($method, $url_params, $url, $requestBody = '')
     {
 
-        $url_params = $this->checkParams($url_params);
-        $url = $this->setUrl($url_params, $url);
+        $url_params = $this->checkParams($url, $url_params);
+
+        $url = Str::urlMerge($url_params, $url);
 
         switch ($method) {
             case 'GET':
-                return $this->httpGet($url);
+                return $this->httpClient->httpGet($url);
                 break;
             case 'POST':
-                return $this->httpPost($url, $requestBody);
+                return $this->httpClient->httpPost($url, $requestBody);
                 break;
             case 'PUT':
-                return $this->httpPut($url, $requestBody);
+                return $this->httpClient->httpPut($url, $requestBody);
                 break;
             case 'DELETE':
-                return $this->httpDelete($url);
+                return $this->httpClient->httpDelete($url);
                 break;
             default:
                 throw new InvalidArgumentException('Unknown method');
@@ -54,22 +55,25 @@ class BasicApi extends HttpClient
         }
     }
 
-    private function setUrl($url_params, $url)
+    private function checkParams($url, array $data = [])
     {
-        return Str::urlMerge($url_params, $url);
-    }
 
-    private function checkParams(array $data = [])
-    {
-        //todo 必传参数验证（其实目前这个验证暂时没啥用，先凑合用吧
-        $this->message['portal_address'] = $this->config->getPortalAddress();
-        $params = array_merge($this->message, $data);
+        $this->init_params['portal_address'] = $this->config->getPortalAddress();
+        $params = array_merge($this->init_params, $data);
 
-        array_map(function ($key, $value) {
-            if (in_array($key, $this->required, true) && empty($value) && empty($this->message[$key])) {
-                throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
+        $required = Str::paramsFilter($url);
+
+        foreach ($required as $item) {
+            if (!in_array($item, array_keys($params), true)) {
+                throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $item));
             }
-        }, array_keys($params), $params);
+        }
+
+        $params = array_merge(array_flip($required), $params);
+
+        foreach ($params as $key => $param) {
+            if (empty($param)) throw new InvalidArgumentException(sprintf('Attribute "%s" can not be empty!', $key));
+        }
 
         return $params;
     }
