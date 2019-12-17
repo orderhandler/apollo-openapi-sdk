@@ -28,7 +28,7 @@ $base = ApiFactory::base($config);
 $appList = $base->getApp($appId);
 
 ```
-##Documentation
+## Documentation
 
 ##### Config参数说明：
 |参数名|参数说明|
@@ -46,15 +46,15 @@ $appList = $base->getApp($appId);
 |key|需要配置的key，在修改、删除配置中使用|
 |operator|操作者，域账号，在删除配置中使用|
 
-###1.Base
+### 1.Base
 
-####实例化
+#### 实例化
 ```php
 <?php
 //config参数详情见顶部参数说明
 $base = OrderHandler\ApolloOpenApi\ApiFactory::base($config);
 ```
-####1.1获取App的环境，集群信息
+#### 1.1获取App的环境，集群信息
 
 ###### 参数说明：
 > + appId  所管理的配置App Id
@@ -89,15 +89,15 @@ $appList = $base->getApp($appId);
   ]
 ```
 
-###2.Namespace
+### 2.Namespace
 
-####实例化
+#### 实例化
 ```php
 <?php
 //config参数详情见顶部参数说明
 $namespaces = OrderHandler\ApolloOpenApi\ApiFactory::namespaces($config);
 ```
-####2.1获取集群下所有Namespace信息
+#### 2.1获取集群下所有Namespace信息
 
 ###### 参数说明：
 > + url_params  参数详情见顶部URL路径参数说明
@@ -170,7 +170,7 @@ $list = $namespaces->getAll($url_params);
 ]
 ```
 
-####2.2获取某个Namespace信息
+#### 2.2获取某个Namespace信息
 
 ###### 参数说明：
 > + url_params  参数详情见顶部URL路径参数说明
@@ -209,7 +209,7 @@ $result = $namespaces->getOne($url_params);
   }
 ```
 
-####2.3创建Namespace
+#### 2.3创建Namespace
 
 ###### 参数说明：
 > + appId  所管理的配置AppId
@@ -243,7 +243,7 @@ $result = $namespaces->create($appId, $requestBody);
 }
 ```
 
-####2.4获取某个Namespace当前编辑人
+#### 2.4获取某个Namespace当前编辑人
 
 ###### 参数说明：
 > + url_params  参数详情见顶部URL路径参数说明
@@ -273,15 +273,15 @@ $result = $namespaces->getStatus($url_params);
 }
 ```
 
-###3.Configuration
+### 3.Configuration
 
-####实例化
+#### 实例化
 ```php
 <?php
 //config参数详情见顶部参数说明
 $configuration = OrderHandler\ApolloOpenApi\ApiFactory::configuration($config);
 ```
-####3.1新增配置
+#### 3.1新增配置
 
 ###### 属性列表：
 > + url_params  参数详情见顶部参数说明
@@ -316,7 +316,7 @@ $result = $configuration->add($url_params, $requestBody);
 }
 ```
 
-####3.2修改配置
+#### 3.2修改配置
 
 ###### 属性列表：
 > + url_params  参数详情见顶部参数说明
@@ -342,7 +342,7 @@ $result = $configuration->update($url_params, $requestBody);
 ###### 返回数据示例
 > 无
 
-####3.3发布配置
+#### 3.3发布配置
 
 ###### 属性列表：
 > + url_params  参数详情见顶部参数说明
@@ -382,7 +382,7 @@ $result = $configuration->release($url_params,$requsetBody);
 }
 ```
 
-####3.4删除配置
+#### 3.4删除配置
 
 ###### 属性列表：
 > + url_params  参数详情见顶部参数说明
