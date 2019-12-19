@@ -37,6 +37,16 @@ class HttpClient
     }
 
 
+    /**
+     * 请求Apollo API，请求成功如返回值按Apollo API返回值为准，否则抛出异常不做任何业务处理
+     *
+     * @param string $url
+     * @param string $method
+     * @param string $request_options
+     * @return array
+     * @throws /RuntimeException
+     *
+     */
     private function request($url, $method, string $request_options)
     {
 
@@ -69,7 +79,7 @@ class HttpClient
 
         } catch (RuntimeException $e) {
 
-            return $e->getMessage();
+            throw new RuntimeException($e->getMessage());
         }
 
 

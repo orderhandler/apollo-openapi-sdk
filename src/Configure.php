@@ -5,7 +5,6 @@ namespace OrderHandler\ApolloOpenApi;
 /**
  * Class Configure
  * @package OrderHandler\ApolloOpenApi
- * @todo logger
  */
 class Configure
 {

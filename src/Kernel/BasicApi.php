@@ -55,6 +55,14 @@ class BasicApi
         }
     }
 
+    /**
+     * 通过传入的url地址获取必须替换的url参数，对比传入的url参数数组判断传参是否正确
+     *
+     * @param string $url 请求的API地址
+     * @param array $data 需要填写的URL参数数组
+     * @return array
+     *
+     */
     private function checkParams($url, array $data = [])
     {
 

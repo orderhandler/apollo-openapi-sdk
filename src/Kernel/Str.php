@@ -13,6 +13,13 @@ class Str
 {
     protected static $urlCache = [];
 
+    /**
+     * 合并url
+     *
+     * @param array $params
+     * @param string $url
+     * @return string
+     */
     public static function urlMerge(array $params, $url)
     {
         $urlParams = [];
@@ -26,6 +33,13 @@ class Str
         return  $merge_url;
     }
 
+    /**
+     * 获取url中需要替换的参数
+     *
+     * @param $url_string
+     * @return array
+     *
+     */
     public static function paramsFilter($url_string)
     {
         $urlParams = [];
