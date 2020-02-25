@@ -15,6 +15,8 @@ class Configure
 
         'Authorization' => '',
 
+        'Logger' => \OrderHandler\ApolloOpenApi\Logger\NoOutputLogger::class,
+
     ];
 
     public static $_instance;
@@ -49,5 +51,8 @@ class Configure
         return $this->config['Authorization'];
     }
 
+    public function getLogger(){
+        return new $this->config['Logger'];
+    }
 }
 

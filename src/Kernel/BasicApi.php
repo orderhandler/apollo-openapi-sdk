@@ -22,37 +22,47 @@ class BasicApi
 
     private $config;
 
-
+    private $logger;
     public function __construct()
     {
         $this->httpClient = new HttpClient();
         $this->config = Register::get('config');
+        $this->logger = $this->config->getLogger();
     }
 
     protected function send($method, $url_params, $url, $requestBody = '')
     {
 
+
+
         $url_params = $this->checkParams($url, $url_params);
 
         $url = Str::urlMerge($url_params, $url);
 
+        $this->logger->info("call apollo api {$url}, with params " . $requestBody);
+
         switch ($method) {
             case 'GET':
-                return $this->httpClient->httpGet($url);
+                $response =  $this->httpClient->httpGet($url);
                 break;
             case 'POST':
-                return $this->httpClient->httpPost($url, $requestBody);
+                $response =  $this->httpClient->httpPost($url, $requestBody);
                 break;
             case 'PUT':
-                return $this->httpClient->httpPut($url, $requestBody);
+                $response =  $this->httpClient->httpPut($url, $requestBody);
                 break;
             case 'DELETE':
-                return $this->httpClient->httpDelete($url);
+                $response =  $this->httpClient->httpDelete($url);
                 break;
             default:
                 throw new InvalidArgumentException('Unknown method');
                 break;
         }
+
+        $this->logger->info("call apollo api {$url}, with responseContent " . json_encode($response));
+
+        return $response;
+
     }
 
     /**
